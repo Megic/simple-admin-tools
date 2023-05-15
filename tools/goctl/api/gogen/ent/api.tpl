@@ -38,6 +38,7 @@ type (
 
 @server(
     jwt: Auth
+    prefix: /{{.groupName}}
     group: {{.groupName}}
     middleware: Authority
 )
