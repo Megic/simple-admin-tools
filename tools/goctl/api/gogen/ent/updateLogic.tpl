@@ -12,6 +12,7 @@ import (
 {{else}}    "github.com/suyuan32/simple-admin-common/msg/errormsg"
 {{end}}{{if or .hasUUID .useUUID}}	"github.com/suyuan32/simple-admin-common/utils/uuidx"{{end}}
 	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/suyuan32/simple-admin-common/utils/uuidx"
 )
 
 type Update{{.modelName}}Logic struct {
@@ -30,6 +31,7 @@ func NewUpdate{{.modelName}}Logic(ctx context.Context, svcCtx *svc.ServiceContex
 
 func (l *Update{{.modelName}}Logic) Update{{.modelName}}(req *types.{{.modelName}}Info) (*types.BaseMsgResp, error) {
     err := l.svcCtx.DB.{{.modelName}}.UpdateOneID({{if .useUUID}}uuidx.ParseUUIDString({{end}}req.Id){{if .useUUID}}){{end}}.
+		SetUpdatedBy(uuidx.ParseUUIDString(l.ctx.Value("userId").(string))).
 {{.setLogic}}
 
     if err != nil {

@@ -12,6 +12,7 @@ import (
 {{else}}    "github.com/suyuan32/simple-admin-common/msg/errormsg"
 {{end}}{{if .hasUUID}}    "github.com/suyuan32/simple-admin-common/utils/uuidx"
 {{end}}
+	"github.com/suyuan32/simple-admin-common/utils/uuidx"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -31,6 +32,7 @@ func NewCreate{{.modelName}}Logic(ctx context.Context, svcCtx *svc.ServiceContex
 
 func (l *Create{{.modelName}}Logic) Create{{.modelName}}(req *types.{{.modelName}}Info) (*types.BaseMsgResp, error) {
     _, err := l.svcCtx.DB.{{.modelName}}.Create().
+		SetCreatedBy(uuidx.ParseUUIDString(l.ctx.Value("userId").(string))).
 {{.setLogic}}
 
     if err != nil {
