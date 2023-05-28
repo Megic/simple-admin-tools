@@ -42,7 +42,7 @@ func IsUpperProperty(prop string) bool {
 // IsBaseProperty returns true when prop name is
 // id, created_at, updated_at, deleted_at
 func IsBaseProperty(prop string) bool {
-	if prop == "id" || prop == "created_at" || prop == "updated_at" || prop == "deleted_at" {
+	if prop == "id" || prop == "created_at" || prop == "updated_at" || prop == "deleted_at" || prop == "created_by" || prop == "updated_by" || prop == "tenant_id" || prop == "app_id" {
 		return true
 	}
 	return false
