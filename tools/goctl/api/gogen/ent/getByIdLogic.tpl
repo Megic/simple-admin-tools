@@ -43,6 +43,8 @@ func (l *Get{{.modelName}}ByIdLogic) Get{{.modelName}}ById(req *types.{{if .useU
                 Id: data.ID{{if .useUUID}}.String(){{end}},
                 CreatedAt: data.CreatedAt.UnixMilli(),
                 UpdatedAt: data.UpdatedAt.UnixMilli(),
+								CreatedBy: data.CreatedBy.String(),
+                UpdatedBy: data.UpdatedBy.String(),
             },
 {{.listData}}
         },

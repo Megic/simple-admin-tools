@@ -8,7 +8,7 @@ import (
 	"{{.projectPath}}{{.importPrefix}}/internal/svc"
 	"{{.projectPath}}{{.importPrefix}}/internal/types"
 	"{{.projectPath}}{{.importPrefix}}/internal/utils/dberrorhandler"
-
+	"{{.projectPath}}/lib/common"
 {{if .useI18n}}    "github.com/suyuan32/simple-admin-common/i18n"
 {{else}}    "github.com/suyuan32/simple-admin-common/msg/errormsg"
 {{end}}    "github.com/zeromicro/go-zero/core/logx"
@@ -46,6 +46,8 @@ func (l *Get{{.modelName}}ListLogic) Get{{.modelName}}List(req *types.{{.modelNa
                 Id: v.ID{{if .useUUID}}.String(){{end}},
                 CreatedAt: v.CreatedAt.UnixMilli(),
                 UpdatedAt: v.UpdatedAt.UnixMilli(),
+								CreatedBy: common.ToString(v.CreatedBy),
+								UpdatedBy: common.ToString(v.UpdatedBy),
             },
 {{.listData}}
 		})

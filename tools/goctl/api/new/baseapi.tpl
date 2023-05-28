@@ -94,8 +94,14 @@ type BaseIDInfo {
     // Create date | 创建日期
     CreatedAt int64     `json:"createdAt,optional"`
 
+    // Create by | 创建人ID
+    CreatedBy string     `json:"createdBy,optional"`
+
     // Update date | 更新日期
     UpdatedAt int64     `json:"updatedAt,optional"`
+
+    // Updated by | 更新人ID
+    UpdatedBy string     `json:"updatedBy,optional"`
 }
 
 // The base UUID response data | 基础UUID信息
