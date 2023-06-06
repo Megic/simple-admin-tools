@@ -10,7 +10,7 @@ export const columns: BasicColumn[] = [{{.basicData}}
 {{if .useBaseInfo}}  {
     title: t('common.createTime'),
     dataIndex: 'createdAt',
-    width: 70,
+    width: 150,
     customRender: ({ record }) => {
       return formatToDateTime(record.createdAt);
     },
