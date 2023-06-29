@@ -6,7 +6,7 @@ import (
 	"{{.projectPath}}{{.importPrefix}}/internal/svc"
 	"{{.projectPath}}{{.importPrefix}}/internal/types"
 	"{{.projectPath}}{{.importPrefix}}/internal/utils/dberrorhandler"
-
+"{{.projectPath}}/lib/common"
 {{if .useI18n}}    "github.com/suyuan32/simple-admin-common/i18n"
 {{else}}    "github.com/suyuan32/simple-admin-common/msg/errormsg"
 {{end}}{{if .useUUID}}    "github.com/suyuan32/simple-admin-common/utils/uuidx"
@@ -45,8 +45,8 @@ func (l *Get{{.modelName}}ByIdLogic) Get{{.modelName}}ById(req *types.{{if .useU
                 Id:          {{if .useUUID}}pointy.GetPointer(data.ID.String()){{else}}&data.ID{{end}},
 								CreatedAt:    pointy.GetPointer(data.CreatedAt.Unix()),
 								UpdatedAt:    pointy.GetPointer(data.UpdatedAt.Unix()),
-								CreatedBy: data.CreatedBy.String(),
-                UpdatedBy: data.UpdatedBy.String(),
+								CreatedBy:    common.ToString(data.CreatedBy),
+								UpdatedBy:    common.ToString(data.UpdatedBy),
             },
 {{.listData}}
         },
