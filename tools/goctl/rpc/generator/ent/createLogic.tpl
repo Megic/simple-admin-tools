@@ -2,7 +2,6 @@ package {{.packageName}}
 
 import (
 	"context"
-{{if .hasTime}}     "time"{{end}}
 
 	"{{.projectPath}}{{.importPrefix}}/internal/svc"
 	"{{.projectPath}}{{.importPrefix}}/internal/utils/dberrorhandler"
@@ -12,6 +11,7 @@ import (
 {{else}}    "github.com/suyuan32/simple-admin-common/msg/errormsg"
 {{end}}{{if .hasUUID}}    "github.com/suyuan32/simple-admin-common/utils/uuidx"
 {{end}}
+	"github.com/suyuan32/simple-admin-common/utils/pointy"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -30,7 +30,7 @@ func NewCreate{{.modelName}}Logic(ctx context.Context, svcCtx *svc.ServiceContex
 }
 
 func (l *Create{{.modelName}}Logic) Create{{.modelName}}(in *{{.projectName}}.{{.modelName}}Info) (*{{.projectName}}.Base{{if .useUUID}}UU{{end}}IDResp, error) {
-    result, err := l.svcCtx.DB.{{.modelName}}.Create().
+    {{if not .hasSingle}}result, err{{else}}query{{end}} := l.svcCtx.DB.{{.modelName}}.Create(){{if .noNormalField}}.{{end}}
 {{.setLogic}}
 
     if err != nil {

@@ -2,7 +2,6 @@ package {{.packageName}}
 
 import (
 	"context"
-{{if .hasTime}}     "time"{{end}}
 
 	"{{.projectPath}}{{.importPrefix}}/internal/svc"
 	"{{.projectPath}}{{.importPrefix}}/internal/utils/dberrorhandler"
@@ -11,6 +10,7 @@ import (
 {{if .useI18n}}    "github.com/suyuan32/simple-admin-common/i18n"
 {{else}}    "github.com/suyuan32/simple-admin-common/msg/errormsg"
 {{end}}{{if or .hasUUID .useUUID}}	"github.com/suyuan32/simple-admin-common/utils/uuidx"{{end}}
+	"github.com/suyuan32/simple-admin-common/utils/pointy"
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -29,7 +29,7 @@ func NewUpdate{{.modelName}}Logic(ctx context.Context, svcCtx *svc.ServiceContex
 }
 
 func (l *Update{{.modelName}}Logic) Update{{.modelName}}(in *{{.projectName}}.{{.modelName}}Info) (*{{.projectName}}.BaseResp, error) {
-    err := l.svcCtx.DB.{{.modelName}}.UpdateOneID({{if .useUUID}}uuidx.ParseUUIDString({{end}}in.Id){{if .useUUID}}){{end}}.
+	{{if not .hasSingle}}err{{else}}query{{end}}:= l.svcCtx.DB.{{.modelName}}.UpdateOneID({{if .useUUID}}uuidx.ParseUUIDString({{end}}*in.Id){{if .useUUID}}){{end}}{{if .noNormalField}}.{{end}}
 {{.setLogic}}
 
     if err != nil {

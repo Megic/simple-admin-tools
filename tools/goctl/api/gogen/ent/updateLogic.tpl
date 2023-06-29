@@ -11,6 +11,7 @@ import (
 {{if .useI18n}}    "github.com/suyuan32/simple-admin-common/i18n"
 {{else}}    "github.com/suyuan32/simple-admin-common/msg/errormsg"
 {{end}}{{if or .hasUUID .useUUID}}	"github.com/suyuan32/simple-admin-common/utils/uuidx"{{end}}
+	"github.com/suyuan32/simple-admin-common/utils/pointy"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/suyuan32/simple-admin-common/utils/uuidx"
 )
@@ -30,7 +31,7 @@ func NewUpdate{{.modelName}}Logic(ctx context.Context, svcCtx *svc.ServiceContex
 }
 
 func (l *Update{{.modelName}}Logic) Update{{.modelName}}(req *types.{{.modelName}}Info) (*types.BaseMsgResp, error) {
-    err := l.svcCtx.DB.{{.modelName}}.UpdateOneID({{if .useUUID}}uuidx.ParseUUIDString({{end}}req.Id){{if .useUUID}}){{end}}.
+    err := l.svcCtx.DB.{{.modelName}}.UpdateOneID({{if .useUUID}}uuidx.ParseUUIDString({{end}}*req.Id){{if .useUUID}}){{end}}.
 		SetUpdatedBy(uuidx.ParseUUIDString(l.ctx.Value("userId").(string))).
 {{.setLogic}}
 
